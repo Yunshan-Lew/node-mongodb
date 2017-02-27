@@ -1,14 +1,14 @@
 
 //配置mongodb数据库相关的内容
-var mongodb=require('mongodb');
-var MongoClient=mongodb.MongoClient;
-var DB_CONN_STR='mongodb://localhost:27017/foobar';
+var mongodb = require('mongodb');
+var MongoClient = mongodb.MongoClient;
+var DB_CONN_STR = 'mongodb://localhost:27017/foobar';
 
 //配置node服务器相关内容：
-var express=require('express');
-var app =express();
+var express = require('express');
+var app = express();
 var bodyParder = require('body-parser'); 
-app.use(bodyParder.urlencoded({extended: true}));
+app.use(bodyParder.urlencoded({ extended: true }));
 
 //设置跨域访问
 app.all('*', function(req, res, next) {
@@ -22,37 +22,37 @@ app.all('*', function(req, res, next) {
 
 
 //定义get请求的接口
-app.get('/get',function(req,res){
+app.get('/get', function(req, res){
 	//首先得从库里拿到数据
-	var selectData=function(db,callback){
+	var selectData = function(db, callback){
+		var search = req.query.search;
 		//连接到数据文档
 		var collection=db.collection('persons');
 		//查询数据
-		var whereStr={"username":"admin2"};  //我们要查询的信息是所有包含这个内容的数据。
-		collection.find(whereStr).toArray(function(err,result){
+		var whereStr = { "username": search };  //我们要查询的信息是所有包含这个内容的数据。
+		collection.find(whereStr).toArray(function(err, result){
 			if(err){
-				console.log('Error:'+err);
+				console.log('Error:' + err);
 				return;
 			}
 			callback(result);
-		})
+		});
 	}
 	
-	MongoClient.connect(DB_CONN_STR,function(err,db){
+	MongoClient.connect(DB_CONN_STR, function(err, db){
 		console.log("连接成功");
-		selectData(db,function(result){
+		selectData(db, function(result){
 			console.log(result);
 			//把数据返回给前端
-			res.status(200),
-			res.json(result)
-			
+			res.status(200);
+			res.json(result);
 			db.close();
-		})
-	})
+		});
+	});
 	
 });
 //配置服务器端口
-var server = app.listen(3000, function () {
+var server = app.listen(3001, function(){
    var host = server.address().address;
    var port = server.address().port;
    console.log('查看服务启动http://localhost:', port);
