@@ -11,7 +11,7 @@ var bodyParder = require('body-parser');
 app.use(bodyParder.urlencoded({ extended: true }));
 
 //设置跨域访问
-app.all('*', function(req, res, next) {
+app.all('*', function(req, res, next){
    res.header("Access-Control-Allow-Origin", "*");
    res.header("Access-Control-Allow-Headers", "X-Requested-With");
    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
@@ -50,7 +50,7 @@ app.post('/delete', function(req, res){
 });
 
 //配置服务器端口
-var server = app.listen(3003, function () {
+var server = app.listen(3003, function(){
    var host = server.address().address;
    var port = server.address().port;
    console.log('删除服务启动http://localhost:', port);

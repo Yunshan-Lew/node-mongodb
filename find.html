@@ -18,7 +18,7 @@
 			
 				$.ajax({
 					type: 'get',
-					url: 'http://localhost:3001/get',
+					url: 'http://localhost:3001/find',
 					data: { "search": search },
 					success: function(data){
 						var list = data.map(function(item){

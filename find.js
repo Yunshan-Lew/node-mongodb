@@ -22,14 +22,14 @@ app.all('*', function(req, res, next) {
 
 
 //定义get请求的接口
-app.get('/get', function(req, res){
+app.get('/find', function(req, res){
 	//首先得从库里拿到数据
 	var selectData = function(db, callback){
 		var search = req.query.search;
 		//连接到数据文档
-		var collection=db.collection('persons');
+		var collection = db.collection('persons');
 		//查询数据
-		var whereStr = { "username": search };  //我们要查询的信息是所有包含这个内容的数据。
+		var whereStr = { "username": search };  //我们要查询的信息是所有包含这个内容的数据
 		collection.find(whereStr).toArray(function(err, result){
 			if(err){
 				console.log('Error:' + err);
@@ -47,8 +47,8 @@ app.get('/get', function(req, res){
 			db.close();
 		});
 	});
-	
 });
+
 //配置服务器端口
 var server = app.listen(3001, function(){
    var host = server.address().address;
