@@ -14,14 +14,14 @@ app.use(bodyParder.urlencoded({ extended: true }));
 app.all('*', function(req, res, next) {
    res.header("Access-Control-Allow-Origin", "*");
    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-   res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-   res.header("X-Powered-By",' 3.2.1');
+   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+   res.header("X-Powered-By", ' 3.2.1');
    res.header("Content-Type", "application/json;charset=utf-8");
    next();
 })
 
 //定义post请求的接口，比如要删除某个用户的信息
-app.post('/delete',function(req, res){
+app.post('/delete', function(req, res){
 	var name = req.body.name;
 	//首先得从库里找到数据
 	var delData = function(db, callback){
@@ -40,19 +40,21 @@ app.post('/delete',function(req, res){
 	}
 	
 	MongoClient.connect(DB_CONN_STR, function(err, db){
-		console.log("连接成功");
 		delData(db, function(result){
-			//到这里数据库中对应的信息已经进行了修改，
+			//到这里数据库中对应的信息已经进行了修改
+			res.status(200);
+			res.json(result);
 			db.close();
 		});
 	});
-})
+});
+
 //配置服务器端口
 var server = app.listen(3003, function () {
    var host = server.address().address;
    var port = server.address().port;
    console.log('删除服务启动http://localhost:', port);
-})
+});
 
 
 

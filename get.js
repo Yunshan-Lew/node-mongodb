@@ -15,7 +15,7 @@ app.all('*', function(req, res, next) {
    res.header("Access-Control-Allow-Origin", "*");
    res.header("Access-Control-Allow-Headers", "X-Requested-With");
    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-   res.header("X-Powered-By",' 3.2.1');
+   res.header("X-Powered-By", ' 3.2.1');
    res.header("Content-Type", "application/json;charset=utf-8");
    next();
 })
@@ -40,9 +40,7 @@ app.get('/get', function(req, res){
 	}
 	
 	MongoClient.connect(DB_CONN_STR, function(err, db){
-		console.log("连接成功");
 		selectData(db, function(result){
-			console.log(result);
 			//把数据返回给前端
 			res.status(200);
 			res.json(result);

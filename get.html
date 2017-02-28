@@ -7,7 +7,9 @@
 	<body>
 		<input type="text" id="search" />
 		<button class="box">获取数据</button>
+		<ul id="result">
 		
+		</ul>
 		
 		<script src="js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript">
@@ -19,7 +21,10 @@
 					url: 'http://localhost:3001/get',
 					data: { "search": search },
 					success: function(data){
-						console.log(data);
+						var list = data.map(function(item){
+							return '<li>' + item.username + ' | ' + item.password + '</li>'
+						}).join('');
+						$('#result').html('').append(list);
 					},
 					error: function(){
 						console.log('error');
