@@ -1,0 +1,83 @@
+// bin目录下
+
+// 安装运行
+mongod --dbpath="C:\program files\mongodb\data" --logpath="C:\program files\mongodb\log\log.txt" --install --serviceName myMongo --serviceDisplayName myMongo
+
+// 设置引擎
+mongod --startEngine mmapv1 --dbpath C:\program files\mongodb\data
+
+mongod.exe
+
+net start myMongo
+
+// 进入MongoDB数据库
+mongo
+
+// 创建并查看数据库
+use hello-world
+show dbs
+
+// 创建集合（表）
+db.createCollection("users")
+
+// 插入数据
+db.users.insert({ userid: "admin", password: "admin123" })
+
+// 查看数据
+db.users.find()
+
+## where / and条件：
+select name, age, skills from users where name = 'Hurry' and age = 18;
+db.users.find({ 'name': 'Hurry', 'age': 18 }, { 'name': 1, 'age': 1, 'skills': 1 });
+
+## or条件：
+select name, age, skills from users where name = 'hurry' or age = 18;
+db.users.find({ '$or': [{ 'name': 'hurry' }, { 'age': 18 }] }, { 'name': 1, 'age': 1, 'skills': 1 });
+
+## <, <=, >, >= ($lt, $lte, $gt, $gte )
+select * from users where age >= 20 and age <= 30;
+db.users.find({ 'age': { '$gte': 20, '$lte': 30 } });
+
+## 使用in, not in ($in, $nin)
+select * from users where age in (10, 22, 26);
+db.users.find({ 'age': { '$in': [10, 22, 26] } });
+
+## 匹配null
+select * from users where age is null;
+db.users.find({ 'age': null });
+
+## 支持正则表达式
+select * from users where name like "%hurry%";
+db.users.find({ name: /hurry/ }); 
+select * from users where name like "hurry%";
+db.users.find({ name: /^hurry/ });
+
+
+// 更新数据
+db.collection.update(criteria, objNew, upsert, multi)
+
+## 只更新了第一条记录
+db.users.update({ "count": { $gt: 1 } }, { $set: { "test2": "OK" } }, false, false);
+## 全更新了
+db.users.update({ "count": { $gt: 3 } }, { $set: { "test2": "OK" } }, false, true);
+## 只加进去了第一条
+db.users.update({ "count": { $gt: 4 } }, { $set: { "test5": "OK" } }, true, false);
+## 全加进去了
+db.users.update({ "count": { $gt: 5 } }, { $set: { "test5": "OK" } }, true, true);
+## 全更新了
+db.users.update({ "count": { $gt: 15 } }, { $inc: { "count": 1 } }, false, true);
+## 只更新了第一条
+db.users.update({ "count": { $gt: 10 } }, { $inc: { "count": 1 } }, false, false);
+
+
+// save()更新
+db.collection.save(x)
+
+## x就是要更新的对象，只能是单条记录。
+
+
+// remove()删除
+db.collection.remove(query, justOne)
+
+## 清空collection集合
+db.collection.remove({ })

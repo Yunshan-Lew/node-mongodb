@@ -41,8 +41,8 @@ app.post('/change',function(req, res){
 		});
 	}
 	
-	MongoClient.connect(DB_CONN_STR,function(err,db){
-		updateData(db,function(result){
+	MongoClient.connect(DB_CONN_STR, function(err, db){
+		updateData(db, function(result){
 			//到这里数据库中对应的信息已经进行了修改
 			res.status(200);
 			res.json(result);
