@@ -13,9 +13,10 @@ net start myMongo
 // 进入MongoDB数据库
 mongo
 
-// 创建并查看数据库
+// 创建并查看数据库/集合
 use hello-world
 show dbs
+show collections
 
 // 创建集合（表）
 db.createCollection("users")
