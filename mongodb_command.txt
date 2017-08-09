@@ -69,7 +69,8 @@ db.users.update({ "count": { $gt: 5 } }, { $set: { "test5": "OK" } }, true, true
 db.users.update({ "count": { $gt: 15 } }, { $inc: { "count": 1 } }, false, true);
 ## 只更新了第一条
 db.users.update({ "count": { $gt: 10 } }, { $inc: { "count": 1 } }, false, false);
-
+## 删除index字段
+db.users.update({ }, { $unset: { "index" : "" } }, false, true);
 
 // save()更新
 db.collection.save(x)
